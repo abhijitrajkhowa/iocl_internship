@@ -40,7 +40,7 @@ app.post("/subscribe", async (req, res) => {
 	console.log(subscription);
 	try {
 		const subscribed = await Subscriptions.findOne({
-			endpoint: subscription.endpoint,
+			subscription: subscription,
 		});
 		if (!subscribed) {
 			const subscriptions = new Subscriptions({
