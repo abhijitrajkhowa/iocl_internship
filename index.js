@@ -28,6 +28,9 @@ mongoose.connection.on("error", (err) => {
 const publicVapidKey =
 	"BOH3eB28FcyocToCU5kzS5tPu5H952AppGs3EePv_KKe04QSdjGFghjg5fUKj86rJ5HMjtHLXsHvcQnHPE7BYeU";
 const privateVapidKey = "kcP63sPcl3EvUG8RWYHgiLHukq0ynRfWjZ7x_sI9sas";
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/biki52/iocl_internship/upload';
+const CLOUDINARY_UPLOAD_PRESET = 'iocl_noti_icon';
+
 
 webPush.setVapidDetails(
 	"mailto:rajkhowaabhijit71@gmail.com",
@@ -72,6 +75,26 @@ app.post("/sendNotification", async (req, res) => {
 	});
 	res.status(200).json();
 });
+app.post("/icon-upload",async(req,res)=>{
+	const {file} = req.body;
+	if(!file){
+		return res.status(441).send({error: 'file is required'});
+	}
+	const data = new FormData();
+    data.append('file',file)
+    data.append('upload_preset',CLOUDINARY_UPLOAD_PRESET)
+	await fetch(`${CLOUDINARY_URL}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: data,
+      }).then(res=> res.json())
+      .then(data=>{
+        // console.log(data);
+        return res.status(200).send({data});
+      }).catch((e)=> console.log(e))
+})
 
 const port = process.env.PORT || 5000;
 

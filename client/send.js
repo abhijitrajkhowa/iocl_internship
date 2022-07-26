@@ -1,6 +1,3 @@
-const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/biki52/iocl_internship/upload';
-const CLOUDINARY_UPLOAD_PRESET = 'iocl_noti_icon';
-
 const thisForm = document.getElementById('notificationForm');
 const fileUpload = document.getElementById('icon');
 const imagePreview = document.getElementById('img-preview');
@@ -8,15 +5,15 @@ let notificationIconUrl;
 fileUpload.addEventListener('change', async(e)=>{
     const file = e.target.files[0];
     // console.log(file);
-    const data = new FormData();
-    data.append('file',file)
-    data.append('upload_preset',CLOUDINARY_UPLOAD_PRESET)
-    fetch(`${CLOUDINARY_URL}`, {
+    // const data = new FormData();
+    // data.append('file',file)
+    // data.append('upload_preset',CLOUDINARY_UPLOAD_PRESET)
+    fetch(`/icon-upload`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        body: data,
+        body: file,
       }).then(res=> res.json())
       .then(data=>{
         console.log(data);
