@@ -56,10 +56,11 @@ app.post("/subscribe", async (req, res) => {
 	}
 });
 app.post("/sendNotification", async (req, res) => {
-	const { title, body } = req.body;
+	const { title, body, icon} = req.body;
 	const payload = JSON.stringify({
 		title: title,
 		body: body,
+		icon: icon
 	});
 	const subscriptions = await Subscriptions.find();
 	subscriptions.map((obj, i) => {
